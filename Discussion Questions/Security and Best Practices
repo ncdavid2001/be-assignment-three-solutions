@@ -1,0 +1,60 @@
+1. What additional security measures would you implement for a production API?
+
+Use HTTPS to encrypt all traffic.
+Implement authentication (e.g., JWT, OAuth) and authorization to control access.
+Rate limit requests to prevent abuse (e.g., express-rate-limit).
+Validate and sanitize all user input to prevent injection attacks.
+Use security headers with helmet.
+Enable CORS only for trusted origins.
+Log and monitor suspicious activity.
+Keep dependencies updated and avoid known vulnerabilities.
+
+
+2. How do you handle input validation and sanitization in Express.js applications?
+
+Use libraries like express-validator or Joi to define validation rules for incoming data.
+Validate all request data (body, query, params) before processing.
+Sanitize inputs to remove or escape harmful content (e.g., strip HTML, escape special characters).
+Return clear error messages for invalid input, but avoid exposing sensitive details.
+
+
+3. What are the best practices for API versioning and backward compatibility?
+
+Include the version in the URL (e.g., /api/v1/books) or in request headers.
+Never break existing endpoints—add new features or changes in a new version.
+Deprecate old versions gradually and communicate changes to API consumers.
+Maintain clear documentation for each version.
+Use semantic versioning for major changes.
+
+
+
+
+
+What additional security measures would you implement for a production API?
+
+Enforce HTTPS to encrypt all data in transit.
+Implement authentication (e.g., JWT, OAuth) and authorization to restrict access.
+Use rate limiting (e.g., with express-rate-limit) to prevent abuse and DoS attacks.
+Set secure HTTP headers using helmet.
+Enable CORS only for trusted origins.
+Validate and sanitize all user input to prevent injection attacks.
+Log and monitor requests for suspicious activity.
+Regularly update dependencies and patch vulnerabilities.
+Store sensitive data (like API keys) in environment variables, not in code.
+
+
+How do you handle input validation and sanitization in Express.js applications?
+
+Use libraries like express-validator or Joi to define and enforce validation rules for all incoming data (body, query, params).
+Sanitize inputs to remove or escape potentially harmful content (e.g., strip HTML, escape special characters).
+Validate data before processing it in controllers or services.
+Return clear, user-friendly error messages for invalid input, but avoid exposing sensitive details.
+
+
+What are the best practices for API versioning and backward compatibility?
+
+Include the API version in the URL path (e.g., /api/v1/books) or in request headers.
+Never break existing endpoints; introduce breaking changes in a new version.
+Deprecate old versions gradually and communicate changes to API consumers.
+Maintain clear documentation for each version.
+Use semantic versioning and changelogs to track changes and updates.

@@ -1,0 +1,78 @@
+// 1. **How would you implement pagination for the book listing API?**  
+//    - Accept `page` and `limit` as query parameters in the GET `/books` endpoint (e.g., `/books?page=2&limit=10`).
+//    - In the service or controller, calculate the starting index: `start = (page - 1) * limit` and ending index: `end = start + limit`.
+//    - Slice the books array or query result accordingly: `books.slice(start, end)`.
+//    - Return the paginated data along with metadata (total count, current page, total pages).
+
+   **Example:**
+
+   
+   ````js
+   // Controller example
+   app.get('/books', (req, res) => {
+     const page = parseInt(req.query.page) || 1;
+     const limit = parseInt(req.query.limit) || 10;
+     const books = Book.findAll();
+     const start = (page - 1) * limit;
+     const paginatedBooks = books.slice(start, start + limit);
+     res.json({
+       data: paginatedBooks,
+       page,
+       limit,
+       total: books.length,
+       totalPages: Math.ceil(books.length / limit)
+     });
+   });
+   ````
+
+// 2. **What would you need to change to add search functionality to the books API?**  
+//    - Accept a `search` query parameter (e.g., `/books?search=node`).
+//    - In the service or controller, filter the books array or query result based on the search term (e.g., match title or author).
+//    - Combine with pagination if needed.
+
+   **Example:**
+   ````js
+   // Controller example
+   app.get('/books', (req, res) => {
+     const { search = '', page = 1, limit = 10 } = req.query;
+     let books = Book.findAll();
+     if (search) {
+       books = books.filter(book =>
+         book.title.toLowerCase().includes(search.toLowerCase()) ||
+         book.author.toLowerCase().includes(search.toLowerCase())
+       );
+     }
+     // ...pagination logic as above
+   });
+   ````
+
+// 3. **How would you implement user authentication and authorization in this architecture?**  
+//    - **Authentication:**  
+//      - Add user registration and login endpoints.
+//      - Use JWT (JSON Web Tokens) or sessions to authenticate users.
+//      - On login, issue a token; require the token in the `Authorization` header for protected routes.
+//      - Add authentication middleware to verify tokens and attach user info to `req.user`.
+
+//    - **Authorization:**  
+//      - In controllers or middleware, check `req.user` for roles or permissions before allowing access to certain endpoints (e.g., only allow admins to delete books).
+//      - Return `403 Forbidden` if the user lacks permission.
+
+   **Example:**
+   ````js
+   // Authentication middleware
+   function authenticate(req, res, next) {
+     const token = req.headers.authorization?.split(' ')[1];
+     if (!token) return res.status(401).json({ message: 'Unauthorized' });
+     try {
+       req.user = jwt.verify(token, process.env.JWT_SECRET);
+       next();
+     } catch {
+       res.status(401).json({ message: 'Invalid token' });
+     }
+   }
+
+   // Usage in routes
+   app.delete('/books/:id', authenticate, (req, res) => {
+     // Optionally check req.user.role for authorization
+   });
+   ````

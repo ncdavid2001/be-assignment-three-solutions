@@ -1,0 +1,17 @@
+1. **How would you modify the current architecture to support multiple data sources?**  
+   - Abstract data access logic into repository or data access layer classes, so controllers/services interact with an interface rather than a specific storage implementation.
+   - Implement separate modules for each data source (e.g., file, in-memory, SQL, NoSQL) that follow the same interface.
+   - Use configuration or environment variables to select the data source at runtime.
+   - This allows you to switch or combine data sources (e.g., read from cache, write to database) without changing business logic or controllers.
+
+2. **What changes would be needed to make the API support real-time updates?**  
+   - Integrate WebSocket support (e.g., using `socket.io`) alongside Express to push updates to clients in real time.
+   - Emit events from your service layer when data changes (e.g., book created/updated/deleted).
+   - On the frontend, connect to the WebSocket server to receive and handle real-time updates.
+   - Optionally, use libraries like `EventEmitter` for internal event handling and broadcasting.
+
+3. **How would you implement rate limiting and API quotas?**  
+   - Use middleware such as `express-rate-limit` to limit the number of requests per IP or user within a time window.
+   - Configure limits (e.g., 100 requests per 15 minutes) and customize responses for exceeded limits.
+   - For API quotas (per user or API key), store usage data in a persistent store (like Redis or a database) and check/update quotas on each request.
+   - Return appropriate HTTP status codes (e.g., 429 Too Many Requests) when limits are exceeded.

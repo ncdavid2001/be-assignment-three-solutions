@@ -1,0 +1,60 @@
+1. Analyze the sendResponse utility function:
+
+What is the purpose of standardizing API responses?
+Standardizing API responses ensures that every response from the server follows a consistent structure. This makes it easier for frontend developers and API consumers to parse, handle, and display data or errors, regardless of the endpoint.
+
+2. How does this pattern help frontend developers?
+
+Frontend developers can reliably extract data, status, and messages from responses without writing custom logic for each endpoint. It reduces bugs, simplifies error handling, and speeds up integration.
+
+3. What information should be included in a successful API response?
+
+A typical successful response should include:
+
+success (boolean): Indicates if the operation was successful.
+message (string): A human-readable message about the result.
+data (object/array): The actual data returned by the API.
+statusCode (number): The HTTP status code (optional, but helpful).
+Example:
+````js
+{
+  "success": true,
+  "message": "Book created successfully",
+  "data": { "id": 1, "title": "Node.js Guide" }
+}
+````
+
+
+
+Design a consistent error response format:
+
+
+What fields should be included in error responses?
+
+success (boolean): Always false for errors.
+message (string): A user-friendly error message.
+error (string or object): Technical error details (optional, for debugging).
+statusCode (number): The HTTP status code.
+Example:
+````js
+{
+  "success": false,
+  "message": "Book not found",
+  "error": "No book with ID 123",
+  "statusCode": 404
+}
+````
+How can you make error messages helpful for debugging while being safe for production?
+
+Show user-friendly messages in production.
+Include detailed error info only in development (e.g., stack traces).
+Use environment checks to control what is sent to the client:
+
+````js
+// Example logic
+if (process.env.NODE_ENV === 'development') {
+  res.json({ success: false, message, error, statusCode });
+} else {
+  res.json({ success: false, message, statusCode });
+````
+

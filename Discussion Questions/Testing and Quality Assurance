@@ -1,0 +1,19 @@
+1. **How would you approach testing the different layers of the MVC architecture?**  
+   - **Model/Schema:** Write unit tests to verify data validation, schema methods, and data manipulation logic.
+   - **Service:** Test business logic in isolation, mocking dependencies like models or external services.
+   - **Controller:** Use integration tests to ensure controllers handle requests and responses correctly, including error handling and status codes.
+   - **End-to-end (E2E):** Test the full request flow from API endpoint to data storage, simulating real user interactions.
+
+2. **What tools and frameworks would you use for API testing?**  
+   - **Jest** or **Mocha** for unit and integration tests.
+   - **Supertest** for HTTP assertions and testing Express routes.
+   - **Chai** for expressive assertions (often used with Mocha).
+   - **Sinon** for mocking and spying on functions.
+   - **Postman** or **Insomnia** for manual API testing and automated collections.
+
+3. **How do you ensure API reliability and handle edge cases?**  
+   - Write comprehensive tests for all endpoints, including edge cases (e.g., invalid input, missing data, unauthorized access).
+   - Validate and sanitize all input.
+   - Implement proper error handling and return meaningful error messages.
+   - Use monitoring and logging to detect and diagnose issues in production.
+   - Regularly review and update tests as the API evolves to catch regressions and new edge cases.

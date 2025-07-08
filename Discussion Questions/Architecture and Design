@@ -1,0 +1,24 @@
+1. **How does the MVC pattern help teams collaborate on large applications?**  
+The MVC pattern separates an application into three layers: Model (data), View (UI or API responses), and Controller (request handling). This clear separation allows different team members to work on different parts independently—backend developers can focus on models and controllers, while frontend or API developers can focus on views. It reduces merge conflicts, clarifies responsibilities, and makes onboarding easier for new team members.
+
+---
+
+2. **What are the trade-offs between different data persistence strategies?**  
+- **In-memory storage:**  
+  - *Pros:* Fast, simple, no external dependencies.  
+  - *Cons:* Data is lost on restart, not suitable for production, limited by server memory.
+- **File-based storage:**  
+  - *Pros:* Data persists across restarts, easy to implement, no database server needed.  
+  - *Cons:* Slower than memory, can have concurrency issues, not scalable for large data or high traffic.
+- **Database (SQL/NoSQL):**  
+  - *Pros:* Scalable, reliable, supports concurrent access, advanced querying.  
+  - *Cons:* More complex setup, requires maintenance, may introduce external dependencies.
+
+---
+
+3. **How would you scale the file-based storage approach for a production application?**  
+Scaling file-based storage is challenging, but possible improvements include:
+- Implement file locking or use a queue to serialize read/write operations and avoid race conditions.
+- Partition data into multiple files (e.g., by user or resource) to reduce contention.
+- Use in-memory caching with periodic writes to disk for performance.
+- Eventually, migrate to a real database (like PostgreSQL or MongoDB) for better scalability, reliability, and concurrency support, as file-based storage is not recommended for high-traffic or mission-critical production systems.

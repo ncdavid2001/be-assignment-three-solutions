@@ -1,0 +1,26 @@
+1. **Examine the `book.schema.js` file:**
+
+   - **How does the Book class simulate a database model?**  
+     The `Book` class acts as an in-memory or file-backed representation of a database table. It typically includes properties for each field (like `id`, `title`, `author`) and static methods for CRUD operations (e.g., `findAll`, `findById`, `create`, `update`, `delete`). Data is stored in memory or read from/written to a file, simulating how a real database model would interact with persistent storage.
+
+   - **What are the benefits of using static methods for database operations?**  
+     Static methods allow you to perform operations on the collection of books without needing to instantiate a `Book` object. This mirrors how ORM libraries (like Sequelize or Mongoose) work, making the API familiar and easy to use. It also keeps the logic for data access and manipulation encapsulated within the model.
+
+   - **How does this pattern make it easier to switch to a real database later?**  
+     By centralizing all data access logic in the model’s static methods, you can later replace the file or in-memory logic with real database queries (e.g., SQL or MongoDB) without changing the rest of your application. Controllers and services can continue calling `Book.findAll()` or `Book.create()`, but the implementation behind those methods can be swapped out for real database calls.
+
+---
+
+2. **Analyze the error handling in `todo.service.js`:**
+
+   - **How does the service handle the case when a todo is not found?**  
+     Typically, the service checks if a todo exists (e.g., by ID) before performing operations. If not found, it may return `null`, `undefined`, or throw an error (like `throw new Error('Todo not found')`).
+
+   - **What would happen if you tried to update a non-existent todo?**  
+     If the service does not find the todo, it should return an error or a specific value indicating failure. If not handled properly, the update operation might silently fail or cause unexpected behavior in the application.
+
+   - **How could you improve the error handling in this service?**  
+     - Always throw a clear, custom error (e.g., `throw new NotFoundError('Todo not found')`) when a todo is missing.
+     - Use consistent error objects with status codes and messages.
+     - Ensure controllers catch these errors and return appropriate HTTP responses (like 404 for not found).
+     - Optionally, use a centralized error handler middleware in Express to format and send error responses.
